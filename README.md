@@ -32,8 +32,8 @@ Idea based on an offline, whiteboard-and-magnets based solution by the Talents C
 Code initially written by [https://github.com/voodoocode/](https://github.com/voodoocode/).
 
 #### Background images
-Thanks to unsplash and the kind photographers of the photos, used as the columns' background images.
+Thanks to unsplash.com and the kind photographers of the photos which are used as the columns' background images.
 
-* ["Office" by Jack Finnigan](https://unsplash.com/photos/qTT9w8MRLvo)
-* ["Homeoffice" by Rob Bye](https://unsplash.com/photos/f6bKycd4UFc) 
-* ["Away" by Andrew Charney](https://unsplash.com/photos/0Y-tc6hu5gg)
+* "Office" [photo by Jack Finnigan](https://unsplash.com/photos/qTT9w8MRLvo)
+* "Homeoffice" [photo by Slava Keyzman](https://unsplash.com/photos/qr4d407hSjo)
+* "Away": [photo by Andrew Charney](https://unsplash.com/photos/0Y-tc6hu5gg)
