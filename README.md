@@ -23,3 +23,17 @@ After that, tiles are stored permanently, so every person may update their worki
 2. Run it with published port. That can be changed in the Dockerfile.
 
     `$ docker run -p 5711:5711 awayboard`
+
+
+## Credits
+
+Idea based on an offline, whiteboard-and-magnets based solution by the Talents Connect SMASH-Squad.
+
+Code initially written by [https://github.com/voodoocode/](https://github.com/voodoocode/).
+
+#### Background images
+Thanks to unsplash.com and the kind photographers of the photos which are used as the columns' background images.
+
+* "Office" [photo by Jack Finnigan](https://unsplash.com/photos/qTT9w8MRLvo)
+* "Homeoffice" [photo by Slava Keyzman](https://unsplash.com/photos/qr4d407hSjo)
+* "Away": [photo by Andrew Charney](https://unsplash.com/photos/0Y-tc6hu5gg)
