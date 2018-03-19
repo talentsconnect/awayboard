@@ -1,5 +1,3 @@
-# Created by .ignore support plugin (hsz.mobi)
-### Node template
 # Logs
 logs
 *.log
@@ -7,12 +5,20 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Dependency directories
+
+# Dependencies
 node_modules/
 jspm_packages/
-
 package-lock.json
 
 
+#jetbrains IDE
 .idea
+
+
+#app internal storage
 .data/
+
+
+#mac osX
+.DS_Store
