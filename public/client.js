@@ -13,17 +13,18 @@ $(function() {
   //init drag and drop
   $( ".column" ).sortable({
       connectWith: ".column",
-      handle: ".tile__header",
+      handle: "[data-draggable]",
       placeholder: "tile__placeholder",
       start: function (event, ui) {
         ui.item.css("transform", "")
-        ui.item.addClass('tilt');
+        ui.item.addClass('-dragged');
       },
       stop: function (event, ui) {
-        postData();
+          ui.item.removeClass('-dragged');
+          postData();
       },
       update: function (event, ui) {
-        ui.item.removeClass('tilt'); 
+        ui.item.removeClass('-dragged');
         var rand = Math.random() * (-3 - 3) + 3;
         ui.item.css("transform", "rotate(" + rand + "deg)")
       }
@@ -56,10 +57,10 @@ $(function() {
     var rand = Math.random() * (-3 - 3) + 3;
     var tile = 
         `<article class="tile" data-tile data-name="${name}" data-image="${image}" style="transform: rotate(${rand}deg)">
-          <div class="tile__content">
+          <div class="tile__content" data-draggable>
             <img class="tile__image" src="${image}">
           </div>
-          <header class="tile__header">${name}</header>
+          <header class="tile__header" data-draggable>${name}</header>
           <button class="tile__remove js-remove"> ╳ </button>
         </article>`;
       

@@ -1,4 +1,4 @@
-
+/* setup & generic styles */
 * {
   box-sizing: border-box;
   --gap: 10px; 
@@ -10,25 +10,26 @@
   --grids: repeat(auto-fit, minmax(235px, 1fr));
 }
 
+h2 {
+  margin: .5em;
+  text-align: center;
+  font-weight: 200;
+}
+
 body {
+  margin:0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   color: var(--light);
   background-color: var(--dark);
-  margin:0;
 }
 
 
+/* layout */
 main {
-  display: flex;
-  flex-direction: column;
   max-width: 65em;
   margin: 0 auto;
-}
-
-h2 {
-  text-align: center;
-  font-weight: 200;
-  margin: .5em;  
+  display: flex;
+  flex-direction: column;
 }
 
 .header {
@@ -44,131 +45,150 @@ h2 {
   }
 }
 
+
+/* columns */
 .columns {
+  min-height: calc(100vh - 7.5em);
   display: grid;
   grid-template-rows: 1fr;
   grid-template-columns: var(--grids);
   grid-gap: var(--gap);
-  min-height: calc(100vh - 7.5em);
 }
 
-.column {
-  display: grid;
-  grid-gap: var(--gap);
-  grid-auto-rows: var(--size);
-  grid-template-columns: repeat(auto-fit, var(--size));
-  padding: var(--spacing);
-  border: 2px solid var(--light);
-  background-size: cover;
-  min-height: var(--size);
-  position: relative;
-}
+  .column {
+    min-height: var(--size);
+    padding: var(--spacing);
 
-@media(max-width: 726px) {
-  .column:before {
-    position: absolute;
-    bottom: var(--spacing); right: var(--spacing);
-    content: attr(title);
+    position: relative;
+    display: grid;
+    grid-gap: var(--gap);
+    grid-auto-rows: var(--size);
+    grid-template-columns: repeat(auto-fit, var(--size));
+
+    border: 2px solid var(--light);
+    background-size: cover;
   }
-}
 
-[data-col="office"]{
-  background-image: url("https://images.unsplash.com/photo-1517504102803-2bccc073db2d?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=7af7be220da73dc239713cda79fe8138&auto=format&fit=crop&w=600&h=700&q=10&blur=50&bri=-20");
-}
-[data-col="homeoffice"]{
-  background-image: url("https://images.unsplash.com/photo-1506188232657-23c9c893ac2b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=3c82f2eae00a24e9edf641a0ea408ab0&crop=entropy&auto=format&fit=crop&w=600&h=700&q=10&blur=50&bri=-20");
-}
-[data-col="away"]{
-  background-image: url("https://images.unsplash.com/photo-1496023328036-6792ef27a543?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=0ac50af9242a111c8a56dcba5a0c7c5d&auto=format&fit=crop&w=600&h=700&q=10&blur=50&bri=-20");
-}
+  @media(max-width: 726px) {
+    .column:before {
+      position: absolute;
+      bottom: var(--spacing); right: var(--spacing);
+      content: attr(title); /* uses an emoji */
+    }
+  }
+
+  [data-col="office"]{
+    background-image: url("https://images.unsplash.com/photo-1517504102803-2bccc073db2d?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=7af7be220da73dc239713cda79fe8138&auto=format&fit=crop&w=600&h=700&q=10&blur=50&bri=-20");
+  }
+  [data-col="homeoffice"]{
+    background-image: url("https://images.unsplash.com/photo-1506188232657-23c9c893ac2b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=3c82f2eae00a24e9edf641a0ea408ab0&crop=entropy&auto=format&fit=crop&w=600&h=700&q=10&blur=50&bri=-20");
+  }
+  [data-col="away"]{
+    background-image: url("https://images.unsplash.com/photo-1496023328036-6792ef27a543?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=0ac50af9242a111c8a56dcba5a0c7c5d&auto=format&fit=crop&w=600&h=700&q=10&blur=50&bri=-20");
+  }
 
 
+/* tile related */
 .tile {
-  background: white;
-  border-radius: var(--radius);
-  box-shadow: -1px 1px 1px 0px #a9a9a9;
   position: relative;
   display: flex;
   align-items: flex-start;
-  justify-content: center; }
+  justify-content: center;
+
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: -1px 1px 1px 0 #a9a9a9;
+}
 
   .tile__header {
     position: absolute;
+    width: 100%;
     bottom: calc(var(--spacing) / 2);
     left: var(--spacing);
-    cursor: -webkit-grab;
     color: var(--dark);
-    font-family: "Comic Sans MS";
-    width: 100%;
+    font-family: "Comic Sans MS", monospace;
   }
 
   .tilt {
     transform: rotate(3deg);
-  }
-  
-  .tilt .tile__header {
-    cursor: -webkit-grabbing;
   }
 
   .tile__content {
   }
 
   .tile__image {
-    margin-top: var(--spacing);
     width: calc(var(--size) - var(--spacing)*2 );
     height: calc(var(--size) - var(--spacing)*5 );
+    margin-top: var(--spacing);
     object-fit: cover;
   }
 
   .tile__remove {
+    position: absolute;
+    top: calc(var(--spacing) + (var(--spacing) / 2));
+    right: calc(var(--spacing) + (var(--spacing) / 2));
+    padding: 0;
+
     cursor: pointer;
     background: none;
     border: 0;
     color: #ccc;
     font: inherit;
-    padding: 0;
-    position: absolute;
-    top: calc(var(--spacing) + (var(--spacing) / 2));
-    right: calc(var(--spacing) + (var(--spacing) / 2));
   }
 
 
+  [data-draggable] {
+    cursor: pointer;
+    cursor: grab;
+    cursor: -webkit-grab;
+  }
+
+  .-dragged [data-draggable] {
+    cursor: pointer;
+    cursor: grabbing;
+    cursor: -webkit-grabbing;
+  }
+
+/* drop area */
 .tile__placeholder {
+  height: var(--size);
   border: 1px dashed var(--light);
   border-radius: var(--radius);
-  height: var(--size);
 }
 
+
+/* form elements */
 form {
+  width: 100%;
+  margin: calc(var(--spacing) * 3) 0;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-direction: row;
-  width: 100%;
-  margin: calc(var(--spacing) * 3) 0;
 }
 
-input {
-  all: inherit;
-  background: transparent;
-  color: var(--light);
-  line-height: 2;
-}
+  input {
+    all: inherit;
 
-.input--name {
-  width: 20ch;  
-}
+    margin: 0;
+    padding: 0 var(--spacing);
+    background: transparent;
+    color: var(--light);
+    line-height: 2;
+    border: 1px solid var(--light);
+  }
 
-.input--img {
-  width: 33vw;
-}
+  .input--name {
+    width: 20ch;
+    max-width: 33%;
+  }
 
-.btn--submit {
-  width: 20ch;  
-}
+  .input--img {
+    width: 33vw;
+  }
 
-input {
-  border: 1px solid var(--light);
-  margin: 0;
-  padding: 0 var(--spacing);
-}
+  .btn--submit {
+    width: 20ch;
+    cursor: pointer;
+  }
