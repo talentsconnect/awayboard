@@ -1,4 +1,4 @@
-FROM node:latest
+FROM mhart/alpine-node
 
 RUN mkdir -p /awayboard
 RUN mkdir -p /awayboard/.data
