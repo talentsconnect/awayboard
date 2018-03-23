@@ -8,6 +8,16 @@ for office, homeoffice and away.
 
 ![Screenshot displaying main features of the application](assets/screenshot.png)
 
+## Browser support 
+
+Following are browsers, in which the "Awayboard" was tested and appeared usable.
+The "+" means, it is expected to keep on working in coming versions.
+
+| [<img src="https://raw.githubusercontent.com/talentsconnect/awayboard/master/assets/images/firefox.png" alt="Firefox" width="16px" height="16px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/talentsconnect/awayboard/master/assets/images/chrome.png" alt="Chrome" width="16px" height="16px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome | [<img src="https://raw.githubusercontent.com/talentsconnect/awayboard/master/assets/images/safari.png" alt="Safari" width="16px" height="16px" />](http://godban.github.io/browsers-support-badges/)</br>Safari | [<img src="https://raw.githubusercontent.com/talentsconnect/awayboard/master/assets/images/opera.png" alt="Opera" width="16px" height="16px" />](http://godban.github.io/browsers-support-badges/)</br>Opera | [<img src="https://raw.githubusercontent.com/talentsconnect/awayboard/master/assets/images/chrome-android.png" alt="Chrome for Android" width="16px" height="16px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome for Android |
+| --------- | --------- | --------- | --------- | --------- |
+| 59+| 65+ | 11 | 51 | last version |
+
+
 ## Usage
 Enter a name and an image-url (has to be somewhere online), click "Add person".
 Then drag your tile to the desired column.
