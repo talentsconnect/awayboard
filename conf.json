@@ -13,24 +13,6 @@
       "bgimg": "https://images.unsplash.com/photo-1506188232657-23c9c893ac2b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=3c82f2eae00a24e9edf641a0ea408ab0&crop=entropy&auto=format&fit=crop&w=600&h=700&q=10&blur=50&bri=-20"
     },
     {
-      "key": "homeoffice",
-      "label": "Homeoffice",
-      "symbol": "🏠",
-      "bgimg": "https://images.unsplash.com/photo-1506188232657-23c9c893ac2b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=3c82f2eae00a24e9edf641a0ea408ab0&crop=entropy&auto=format&fit=crop&w=600&h=700&q=10&blur=50&bri=-20"
-    },
-    {
-      "key": "homeoffice",
-      "label": "Homeoffice",
-      "symbol": "🏠",
-      "bgimg": "https://images.unsplash.com/photo-1506188232657-23c9c893ac2b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=3c82f2eae00a24e9edf641a0ea408ab0&crop=entropy&auto=format&fit=crop&w=600&h=700&q=10&blur=50&bri=-20"
-    },
-    {
-      "key": "homeoffice",
-      "label": "Homeoffice",
-      "symbol": "🏠",
-      "bgimg": "https://images.unsplash.com/photo-1506188232657-23c9c893ac2b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=3c82f2eae00a24e9edf641a0ea408ab0&crop=entropy&auto=format&fit=crop&w=600&h=700&q=10&blur=50&bri=-20"
-    },
-    {
       "key": "away",
       "label": "Away",
       "symbol": "🏝",
