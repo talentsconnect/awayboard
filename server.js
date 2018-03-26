@@ -10,25 +10,31 @@ const adapter = new FileSync('.data/db.json');
 const db = low(adapter);
 
 // default db list
-db.defaults({ people: [] })
+db.defaults({people: []})
     .write();
 
+const conf = require('./conf');
+app.set('view engine', 'pug');
 
+// http://expressjs.com/en/starter/static-files.html
 app.use(express.static('public'));
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({extended: true})); // for parsing application/x-www-form-urlencoded
 
 
 // routing
-app.get('/', (request, response) => {
-    response.sendFile(__dirname + '/views/index.html');
+app.get("/", (request, response) => {
+    response.render('index', conf)
 });
 
+
 app.get('/people', (request, response) => {
+
     if (db.has('people').value()) {
         response.send(db.get('people').value());
     }
 });
+
 
 app.post('/people', (request, response) => {
     if (db.has('people').value()) {
