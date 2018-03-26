@@ -41,9 +41,10 @@ After that, tiles are stored permanently, so every person may update their worki
 
 
 ## Configuration
-In `conf.json` it is possible to configurate the desired columns, each with title, background-iamge and symbol.
-Although the Awayboard uses CSS Grids' `auto-fit` and a fractional width, not all configurations might look equally good.
-Up to six columns were tested und look quite ok on a usual large screen.
+In `conf.json` it is possible to configure the desired columns, each with title, background-image and symbol.
+
+Although the Awayboard uses CSS Grids' `auto-fit` and a fractional width, not all configurations might look equally usable.
+Up to six columns were tested and look quite ok on a usual large screen.
 
 
 ## Credits
