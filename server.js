@@ -1,56 +1,74 @@
-// server.js
-// where your node app starts
-
-// init project
-const express = require('express')
+// use express for routing
+const express = require('express');
 const app = express();
-var bodyParser = require('body-parser');
+let bodyParser = require('body-parser');
 
-var low = require('lowdb');
-
-const FileSync = require('lowdb/adapters/FileSync')
-
-const adapter = new FileSync('.data/db.json')
+// use lowdb as storage
+let low = require('lowdb');
+const FileSync = require('lowdb/adapters/FileSync');
+const adapter = new FileSync('.data/db.json');
 const db = low(adapter);
 
-// default  list
-  db.defaults(
-    { people: [
-        {"name":"", "loc":""}
-      ]
-    }
-  ).write();
+// default db list
+db.defaults({ people: [] })
+    .write();
 
-// http://expressjs.com/en/starter/static-files.html
+
 app.use(express.static('public'));
 app.use(bodyParser.json()); // for parsing application/json
-app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-
-// http://expressjs.com/en/starter/basic-routing.html
-app.get("/", (request, response) => {
-  response.sendFile(__dirname + '/views/index.html')
-})
+app.use(bodyParser.urlencoded({extended: true})); // for parsing application/x-www-form-urlencoded
 
 
-app.get("/people", (request, response) => {
-  
-  var dbPeople=[];
-  var people = db.get('people').value();
-  
-  response.send(people.people); 
-  
+// routing
+app.get('/', (request, response) => {
+    response.sendFile(__dirname + '/views/index.html');
 });
 
-app.post("/people", (request, response) => {
-  
-  db.set('people', request.body)
-  .write();
-  
-  console.log("people written to database: \n", request.body);
-  response.sendStatus(200);
+app.get('/people', (request, response) => {
+    if (db.has('people').value()) {
+        response.send(db.get('people').value());
+    }
 });
 
-// listen for requests :)
-const listener = app.listen(process.env.PORT, () => {
-  console.log(`Your app is listening on port ${listener.address().port}`);
-})
+app.post('/people', (request, response) => {
+    if (db.has('people').value()) {
+        db.set('people', request.body)
+            .write();
+
+        console.log('people written to database: \n', request.body);
+        response.sendStatus(200);
+    } else {
+        response.sendStatus(400);
+    }
+});
+
+
+app.post('/person', (request, response) => {
+    if (db.has('people').value()) {
+
+        console.log(db.get('people').find({'name': request.body.name}).value());
+
+        if (db.get('people').find(request.body.name).value()) {
+            db.get('people')
+                .find({'name': request.body.name})
+                .assign(request.body) // todo look why this doesnt update
+                .write();
+
+        } else {
+            db.get('people')
+                .push(request.body)
+                .write();
+        }
+
+        console.log('Person written to database: \n', request.body);
+        response.sendStatus(200);
+    } else {
+        response.sendStatus(400);
+    }
+});
+
+
+// listen for requests
+const listener = app.listen(process.env.PORT || 5711, () => {
+    console.log(`Your app is listening on port ${listener.address().port}`);
+});
