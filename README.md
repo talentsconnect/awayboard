@@ -40,6 +40,12 @@ After that, tiles are stored permanently, so every person may update their worki
     `$ docker run -p 5711:5711 awayboard`
 
 
+## Configuration
+In `conf.json` it is possible to configurate the desired columns, each with title, background-iamge and symbol.
+Although the Awayboard uses CSS Grids' `auto-fit` and a fractional width, not all configurations might look equally good.
+Up to six columns were tested und look quite ok on a usual large screen.
+
+
 ## Credits
 
 Idea based on an offline, whiteboard-and-magnets based solution by the Talents Connect SMASH-Squad.

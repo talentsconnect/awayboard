@@ -7,7 +7,7 @@
   --size: 100px;
   --dark: #464646;
   --light: #c5c5c5;
-  --grids: repeat(auto-fit, minmax(235px, 1fr));
+  --grids: repeat(auto-fit, minmax(200px, 1fr));
 }
 
 h2 {
@@ -26,8 +26,9 @@ body {
 
 /* layout */
 main {
-  max-width: 65em;
+  max-width: 100em;
   margin: 0 auto;
+  padding: 0 var(--spacing);
   display: flex;
   flex-direction: column;
 }
