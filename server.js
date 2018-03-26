@@ -14,43 +14,47 @@ const adapter = new FileSync('.data/db.json')
 const db = low(adapter);
 
 // default  list
-  db.defaults(
-    { people: [
-        {"name":"", "loc":""}
-      ]
+db.defaults(
+    {
+        people: [
+            {"name": "", "loc": ""}
+        ]
     }
-  ).write();
+).write();
+
+const conf = require('./conf');
+app.set('view engine', 'pug');
 
 // http://expressjs.com/en/starter/static-files.html
 app.use(express.static('public'));
 app.use(bodyParser.json()); // for parsing application/json
-app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({extended: true})); // for parsing application/x-www-form-urlencoded
 
-// http://expressjs.com/en/starter/basic-routing.html
+
 app.get("/", (request, response) => {
-  response.sendFile(__dirname + '/views/index.html')
-})
+    response.render('index', conf)
+});
 
 
 app.get("/people", (request, response) => {
-  
-  var dbPeople=[];
-  var people = db.get('people').value();
-  
-  response.send(people.people); 
-  
+
+    var dbPeople = [];
+    var people = db.get('people').value();
+
+    response.send(people.people);
+
 });
 
 app.post("/people", (request, response) => {
-  
-  db.set('people', request.body)
-  .write();
-  
-  console.log("people written to database: \n", request.body);
-  response.sendStatus(200);
+
+    db.set('people', request.body)
+        .write();
+
+    console.log("people written to database: \n", request.body);
+    response.sendStatus(200);
 });
 
 // listen for requests :)
 const listener = app.listen(process.env.PORT, () => {
-  console.log(`Your app is listening on port ${listener.address().port}`);
+    console.log(`Your app is listening on port ${listener.address().port}`);
 })
