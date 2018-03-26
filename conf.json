@@ -1,0 +1,22 @@
+{
+  "columns": [
+    {
+      "key": "office",
+      "label": "Office",
+      "symbol": "🏢",
+      "bgimg": "https://images.unsplash.com/photo-1517504102803-2bccc073db2d?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=7af7be220da73dc239713cda79fe8138&auto=format&fit=crop&w=600&h=700&q=10&blur=50&bri=-20"
+    },
+    {
+      "key": "homeoffice",
+      "label": "Homeoffice",
+      "symbol": "🏠",
+      "bgimg": "https://images.unsplash.com/photo-1506188232657-23c9c893ac2b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=3c82f2eae00a24e9edf641a0ea408ab0&crop=entropy&auto=format&fit=crop&w=600&h=700&q=10&blur=50&bri=-20"
+    },
+    {
+      "key": "away",
+      "label": "Away",
+      "symbol": "🏝",
+      "bgimg": "https://images.unsplash.com/photo-1496023328036-6792ef27a543?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=0ac50af9242a111c8a56dcba5a0c7c5d&auto=format&fit=crop&w=600&h=700&q=10&blur=50&bri=-20"
+    }
+  ]
+}

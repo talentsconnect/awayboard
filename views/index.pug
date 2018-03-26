@@ -1,0 +1,31 @@
+html
+    head
+        title Where are my colleagues?
+        meta(charset="utf-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1")
+        link(rel="stylesheet" href="/style.css")
+
+    body
+        main
+            header.header
+                each col in columns
+                    h2=col.label
+
+            section.columns
+                each col in columns
+                    .column(data-col=col.key, title=col.symbol, style=`background-image:url("${col.bgimg}")`)
+
+            form
+                input.input--name.js-name(type="text", placeholder="Name")
+                input.input--img.js-image(type="url", placeholder="Image URL")
+                input.btn--submit.js-new(type="submit", value=" Add person ")
+
+        script(src="https://code.jquery.com/jquery-2.2.1.min.js",
+        integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00=",
+        crossorigin="anonymous")
+        script(src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js",
+        integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=",
+        crossorigin="anonymous")
+        script(src="/touch-punch.js")
+        script(src="/client.js")
