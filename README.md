@@ -43,7 +43,7 @@ An API with endpoints for reading, creating/updating and removing persons to/fro
 By that, interaction via command-line or other tools is possible. Imagine an NFC-based "check-in-system" to the office or other cool applications 🕹.
 
 
-####  Request all people
+###  Request all people
 Returns the current state of the Awayboard with all the stored people.
 
 * **URL**
@@ -85,7 +85,7 @@ Returns the current state of the Awayboard with all the stored people.
   ```
 
 
-#### Add new /update existing person
+### Add new /update existing person
 This adds a new person to the first column of the Awayboard, if a tile with the given name doesn't exist yet. 
 If a person with the same name _does_ exist, that entry will be updated, with the new given object.
 
@@ -128,7 +128,7 @@ If a person with the same name _does_ exist, that entry will be updated, with th
      -d '{"name":"Burns","image":"http://via.placeholder.com/100x100","loc":"homeoffice"}'
   ```
 
-#### Delete an existing person
+### Delete an existing person
 Deletes an entry which is found under the given name.
 
 * **URL**
