@@ -8,68 +8,72 @@ let low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
 const adapter = new FileSync('.data/db.json');
 const db = low(adapter);
-
-// default db list
 db.defaults({people: []})
     .write();
 
+// pug templating
 const conf = require('./conf');
 app.set('view engine', 'pug');
 
-// http://expressjs.com/en/starter/static-files.html
 app.use(express.static('public'));
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({extended: true})); // for parsing application/x-www-form-urlencoded
 
 
 // routing
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(400).send('Error!');
+});
+
+
 app.get("/", (request, response) => {
     response.render('index', conf)
 });
 
 
 app.get('/people', (request, response) => {
-
     if (db.has('people').value()) {
         response.send(db.get('people').value());
     }
 });
 
 
-app.post('/people', (request, response) => {
-    if (db.has('people').value()) {
-        db.set('people', request.body)
+app.post('/person', (request, response) => {
+    if (db.get('people').find({'name': request.body.name}).value()) {
+        //update
+        db.get('people')
+            .find({'name': request.body.name})
+            .assign({'name': request.body.name, 'image': request.body.image, 'loc': request.body.loc})
             .write();
 
-        console.log('people written to database: \n', request.body);
-        response.sendStatus(200);
+        const newPerson = db.get('people').find({'name': request.body.name}).value();
+        console.log('UPDATED in database: \n', newPerson);
+        response.status(200).json(newPerson);
+
     } else {
-        response.sendStatus(400);
+        // new
+        db.get('people')
+            .push({'name': request.body.name, 'image': request.body.image, 'loc': request.body.loc})
+            .write();
+
+        const newPerson = db.get('people').find({'name': request.body.name}).value();
+        console.log('ADDED to database: \n', newPerson);
+        response.status(201).json(newPerson);
     }
 });
 
 
-app.post('/person', (request, response) => {
-    if (db.has('people').value()) {
+app.delete('/person', (request, response) => {
+    if (db.get('people').find({'name': request.body.name}).value()) {
+        db.get('people')
+            .remove({'name': request.body.name})
+            .write();
 
-        console.log(db.get('people').find({'name': request.body.name}).value());
-
-        if (db.get('people').find(request.body.name).value()) {
-            db.get('people')
-                .find({'name': request.body.name})
-                .assign(request.body) // todo look why this doesnt update
-                .write();
-
-        } else {
-            db.get('people')
-                .push(request.body)
-                .write();
-        }
-
-        console.log('Person written to database: \n', request.body);
-        response.sendStatus(200);
+        console.log('REMOVED from database: \n', request.body);
+        response.sendStatus(204);
     } else {
-        response.sendStatus(400);
+        response.sendStatus(404);
     }
 });
 

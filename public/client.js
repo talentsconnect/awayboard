@@ -10,7 +10,7 @@ $(function () {
     });
 
 
-    //init drag and drop
+    // init drag and drop
     $(".column").sortable({
         connectWith: ".column",
         handle: "[data-draggable]",
@@ -21,38 +21,55 @@ $(function () {
         },
         stop: function (event, ui) {
             ui.item.removeClass('-dragged');
-            postData();
+
+            let person = {
+                'name': ui.item.data('name'),
+                'image': ui.item.data('image'),
+                'loc': ui.item.closest('[data-col]').data('col')
+            };
+
+            sendPerson(person);
         },
         update: function (event, ui) {
             ui.item.removeClass('-dragged');
-            var rand = Math.random() * (-3 - 3) + 3;
+            let rand = Math.random() * (-3 - 3) + 3;
             ui.item.css("transform", "rotate(" + rand + "deg)");
         }
     });
 
 
-    //new button handler
+    // add new tile
     $(document).on('click', '.js-new', function (e) {
         e.preventDefault();
         const rand = Math.floor(Math.random() * (1 - 99) + 99);
-        const name = sanitizeString($('.js-name').val()) || rand;
-        const image = sanitizeString($('.js-image').val()) || "https://spaceholder.cc/100x100?a=" + rand;
-        addTile(name, image, 'office');
-        postData();
-        $('.js-name').val('');
-        $('.js-image').val('');
+        let person = {};
+        person.name = sanitizeString($('.js-name').val()) || rand;
+        person.image = sanitizeString($('.js-image').val()) || "https://spaceholder.cc/100x100?a=" + rand;
+        person.loc = $('[data-col]').first().data('col');
+
+        sendPerson(person);
     });
 
+    function sendPerson(person) {
+        $.ajax({
+            type: 'POST',
+            url: '/person',
+            data: JSON.stringify(person),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json'
+        }).then(function (resp, status, xhr) {
+            sendCallback(resp, xhr);
+        });
+    }
 
-    //remove button handler
-    $(document).on('click', '.js-remove', function (e) {
-        e.preventDefault();
-        removeTile($(this));
-        postData();
-    });
+    function sendCallback(person, xhr) {
+        if (xhr.status === 201) {
+            addTile(person.name, person.image, person.loc);
+            $('.js-name').val('');
+            $('.js-image').val('');
+        }
+    }
 
-
-    // add a new tile
     function addTile(name, image, loc) {
         const rand = Math.random() * (-3 - 3) + 3;
         const tile =
@@ -68,38 +85,38 @@ $(function () {
     }
 
 
-    // add a new tile
-    function removeTile(el) {
-        el.closest('[data-tile]').remove();
+    // remove tile
+
+    $(document).on('click', '.js-remove', function (e) {
+        e.preventDefault();
+        deletePerson({'name': $(this).closest('[data-tile]').data('name')});
+    });
+
+    function deletePerson(person) {
+        $.ajax({
+            type: 'DELETE',
+            url: '/person',
+            data: JSON.stringify(person),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json'
+        }).then(function (resp, status, xhr) {
+            deleteCallback(person, xhr);
+        });
+    }
+
+    function deleteCallback(person, xhr) {
+        if (xhr.status === 204) {
+            removeTile(person);
+        }
+    }
+
+    function removeTile(person) {
+        $(`[data-name="${person.name}"]`).remove();
     }
 
 
-    // post current state to rest api
-    function postData() {
-        let people = [];
-        $('[data-tile]').each(function () {
-            let person = {
-                name: $(this).data('name'),
-                image: $(this).data('image'),
-                loc: $(this).closest('[data-col]').data('col')
-            };
-            people.push(person);
-        });
-
-        $.ajax({
-            type: 'POST',
-            url: '/people',
-            data: JSON.stringify(people),
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json'
-        })
-        .done(function (resp) {
-            console.log(resp);
-        });
-}
-
     function sanitizeString(str) {
-        str = str.replace(/[^a-z0-9áéíóúñü\/:\&\=\?_-\s\.,]/gim, "");
+        str = str.replace(/[^a-z0-9áéíóúñü\/:&=\?_-\s\.,~]/gim, "");
         return str.trim();
     }
 
