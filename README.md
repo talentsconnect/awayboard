@@ -19,7 +19,7 @@ for office, homeoffice and away.
 
     `$ docker run -p 5711:5711 awayboard`
 
-Note: `-p parameters: the first port number is the one on the local machine, the second one the internal one of the docker. 
+Note: `-p` parameters: the first port number is the one on the local machine, the second one the internal one of the docker. 
 The later can be changed in the Dockerfile.
 
 ## Configuration
