@@ -1,99 +1,123 @@
-$(function() {
-  
-  // initial get
-  $.get('/people', function(people) {
-    if (people.length > 0) {
-      people.forEach(function(person) {
-        addTile(person.name, person.image, person.loc); 
-      });
+$(function () {
+
+    // initial get
+    $.get('/people', function (people) {
+        if (people.length > 0) {
+            people.forEach(function (person) {
+                addTile(person.name, person.image, person.loc);
+            });
+        }
+    });
+
+
+    // init drag and drop
+    $(".column").sortable({
+        connectWith: ".column",
+        handle: "[data-draggable]",
+        placeholder: "tile__placeholder",
+        start: function (event, ui) {
+            ui.item.css("transform", "");
+            ui.item.addClass('-dragged');
+        },
+        stop: function (event, ui) {
+            ui.item.removeClass('-dragged');
+
+            let person = {
+                'name': ui.item.data('name'),
+                'image': ui.item.data('image'),
+                'loc': ui.item.closest('[data-col]').data('col')
+            };
+
+            sendPerson(person);
+        },
+        update: function (event, ui) {
+            ui.item.removeClass('-dragged');
+            let rand = Math.random() * (-3 - 3) + 3;
+            ui.item.css("transform", "rotate(" + rand + "deg)");
+        }
+    });
+
+
+    // add new tile
+    $(document).on('click', '.js-new', function (e) {
+        e.preventDefault();
+        const rand = Math.floor(Math.random() * (1 - 99) + 99);
+        let person = {};
+        person.name = sanitizeString($('.js-name').val()) || rand;
+        person.image = sanitizeString($('.js-image').val()) || "https://spaceholder.cc/100x100?a=" + rand;
+        person.loc = $('[data-col]').first().data('col');
+
+        sendPerson(person);
+    });
+
+    function sendPerson(person) {
+        $.ajax({
+            type: 'POST',
+            url: '/person',
+            data: JSON.stringify(person),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json'
+        }).then(function (resp, status, xhr) {
+            sendCallback(resp, xhr);
+        });
     }
-  })
-  
-  
-  //init drag and drop
-  $( ".column" ).sortable({
-      connectWith: ".column",
-      handle: "[data-draggable]",
-      placeholder: "tile__placeholder",
-      start: function (event, ui) {
-        ui.item.css("transform", "")
-        ui.item.addClass('-dragged');
-      },
-      stop: function (event, ui) {
-          ui.item.removeClass('-dragged');
-          postData();
-      },
-      update: function (event, ui) {
-        ui.item.removeClass('-dragged');
-        var rand = Math.random() * (-3 - 3) + 3;
-        ui.item.css("transform", "rotate(" + rand + "deg)")
-      }
-  });
-  
- 
-  //new button handler   
-  $(document).on('click', '.js-new', function(e){
-    e.preventDefault();
-    var rand = Math.floor(Math.random() * (1 - 99) + 99);
-    var name = sanitizeString($('.js-name').val()) || rand;
-    var image = sanitizeString($('.js-image').val()) || "https://spaceholder.cc/100x100?a="+rand;
-    addTile(name, image, 'office');
-    postData();
-    $('.js-name').val('');
-    $('.js-image').val(''); 
-  });
-  
-  
-  //remove button handler
-  $(document).on('click', '.js-remove', function(e){
-    e.preventDefault();
-    removeTile($(this));
-    postData();
-  });
-  
-  
-  // add a new tile
-  function addTile(name, image, loc ){
-    var rand = Math.random() * (-3 - 3) + 3;
-    var tile = 
-        `<article class="tile" data-tile data-name="${name}" data-image="${image}" style="transform: rotate(${rand}deg)">
-          <div class="tile__content" data-draggable>
-            <img class="tile__image" src="${image}">
-          </div>
-          <header class="tile__header" data-draggable>${name}</header>
-          <button class="tile__remove js-remove"> ╳ </button>
-        </article>`;
-      
-      $(`[data-col="${loc}"]`).append(tile);
-  }
-  
-  
-  // add a new tile
-  function removeTile(el){
-      el.closest('[data-tile]').remove();
-  }
-  
-  
-  // post current state to rest api
-  function postData(){
-    let people = [];
-    $('[data-tile]').each(function(){
-      let person = {
-        name: $(this).data('name'),
-        image: $(this).data('image'),
-        loc: $(this).closest('[data-col]').data('col')
-      };
-      people.push(person);
+
+    function sendCallback(person, xhr) {
+        if (xhr.status === 201) {
+            addTile(person.name, person.image, person.loc);
+            $('.js-name').val('');
+            $('.js-image').val('');
+        }
+    }
+
+    function addTile(name, image, loc) {
+        const rand = Math.random() * (-3 - 3) + 3;
+        const tile =
+            `<article class="tile" data-tile data-name="${name}" data-image="${image}" style="transform: rotate(${rand}deg)">
+                  <div class="tile__content" data-draggable>
+                        <img class="tile__image" src="${image}">
+                  </div>
+                  <header class="tile__header" data-draggable>${name}</header>
+                  <button class="tile__remove js-remove"> ╳ </button>
+            </article>`;
+
+        $(`[data-col="${loc}"]`).append(tile);
+    }
+
+
+    // remove tile
+
+    $(document).on('click', '.js-remove', function (e) {
+        e.preventDefault();
+        deletePerson({'name': $(this).closest('[data-tile]').data('name')});
     });
-    
-    $.post('/people', {people: people}).done(function( resp ) {
-      console.log( resp );
-    });
-  }
-    
-  function sanitizeString(str){
-    str = str.replace(/[^a-z0-9áéíóúñü\/:\&\=\?_-\s\.,]/gim,"");
-    return str.trim();
-  }
-  
-})
+
+    function deletePerson(person) {
+        $.ajax({
+            type: 'DELETE',
+            url: '/person',
+            data: JSON.stringify(person),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json'
+        }).then(function (resp, status, xhr) {
+            deleteCallback(person, xhr);
+        });
+    }
+
+    function deleteCallback(person, xhr) {
+        if (xhr.status === 204) {
+            removeTile(person);
+        }
+    }
+
+    function removeTile(person) {
+        $(`[data-name="${person.name}"]`).remove();
+    }
+
+
+    function sanitizeString(str) {
+        str = str.replace(/[^a-z0-9áéíóúñü\/:&=\?_-\s\.,~]/gim, "");
+        return str.trim();
+    }
+
+});
