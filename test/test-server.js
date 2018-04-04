@@ -30,7 +30,21 @@ describe('People', function () {
     });
 
 
-    it('should create a SINGLE person on /person POST', function (done) {
+    it('shouldn’t create a single person on /person POST, with mising name in body', function (done) {
+        chai.request(server)
+            .post('/person')
+            .send({
+                'image': 'https://frinkiac.com/img/S02E22/1071621.jpg',
+                'loc': 'away'
+            })
+            .end(function (err, res) {
+                res.should.have.status(400);
+                done();
+            });
+    });
+
+
+    it('should create a single person on /person POST', function (done) {
         chai.request(server)
             .delete('/person/')
             .send({'name': 'Smithers'})
@@ -57,7 +71,6 @@ describe('People', function () {
                         done();
                     });
             })
-
     });
 
 
