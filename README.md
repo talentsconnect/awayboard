@@ -190,6 +190,25 @@ Missing browser support results out the use of the following feaures:
     * [ES6 Template Literals](https://caniuse.com/#feat=template-literals)
     * `const` and `let`.
 
+## Development
+
+### Installation
+
+Install the dependencies:
+
+```
+$ npm install
+```
+
+### Tests
+
+Tests are written in Mocha with Chai and use chai-http to test the endpoints of the Express API.
+
+#### Run the tests
+
+```
+$ mocha --exit
+```
 
 ## Credits
 

@@ -93,3 +93,6 @@ app.delete('/person', (request, response) => {
 const listener = app.listen(process.env.PORT || 5711, () => {
     console.log(`Your app is listening on port ${listener.address().port}`);
 });
+
+
+module.exports = app;
