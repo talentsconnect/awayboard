@@ -1,11 +1,12 @@
 // use express for routing
 const express = require('express');
 const app = express();
-let bodyParser = require('body-parser');
-let expressSanitizer = require('express-sanitizer');
+const bodyParser = require('body-parser');
+const expressSanitizer = require('express-sanitizer');
+const _ = require('lodash');
 
 // use lowdb as storage
-let low = require('lowdb');
+const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
 const adapter = new FileSync('.data/db.json');
 const db = low(adapter);
@@ -29,13 +30,51 @@ app.use((err, request, response, next) => {
 
 
 app.get("/", (request, response) => {
-    response.render('index', conf)
+    response.render('index', conf);
+});
+app.get("/app", (request, response) => {
+    response.render('app', conf);
 });
 
 
 app.get('/people', (request, response) => {
     if (db.has('people').value()) {
         response.send(db.get('people').value());
+    }
+});
+
+
+app.get('/person/:name', (request, response) => {
+    if (db.get('people').find({'name': request.params.name}).value()) {
+        response.status(200);
+        response.send(db.get('people').find({'name': request.params.name}).value());
+    } else {
+        response.status(404);
+    }
+});
+
+
+app.put('/person/:name/loc/:loc', (request, response) => {
+    const name = request.params.name;
+    const loc = request.params.loc;
+
+    if (!app.validLocation(loc)) {
+        response.sendStatus(400);
+    } else {
+        if (db.get('people').find({'name': name}).value()) {
+
+            db.get('people')
+                .find({'name': name})
+                .assign({'name': name, 'loc': loc})
+                .write();
+
+            const person = db.get('people').find({'name': name}).value();
+            console.log('UPDATED in database: \n', person);
+            response.status(200).json(person);
+
+        } else {
+            response.sendStatus(404);
+        }
     }
 });
 
@@ -52,9 +91,9 @@ app.post('/person', (request, response) => {
             .assign({'name': name, 'image': image, 'loc': loc})
             .write();
 
-        const newPerson = db.get('people').find({'name': name}).value();
-        console.log('UPDATED in database: \n', newPerson);
-        response.status(200).json(newPerson);
+        const person = db.get('people').find({'name': name}).value();
+        console.log('UPDATED in database: \n', person);
+        response.status(200).json(person);
 
     } else {
         // new
@@ -63,9 +102,9 @@ app.post('/person', (request, response) => {
                 .push({'name': name, 'image': image, 'loc': loc})
                 .write();
 
-            const newPerson = db.get('people').find({'name': name}).value();
-            console.log('ADDED to database: \n', newPerson);
-            response.status(201).json(newPerson);
+            const person = db.get('people').find({'name': name}).value();
+            console.log('ADDED to database: \n', person);
+            response.status(201).json(person);
         } else {
             response.status(400).send('Error!');
         }
@@ -87,6 +126,11 @@ app.delete('/person', (request, response) => {
         response.sendStatus(404);
     }
 });
+
+
+app.validLocation = function (input) {
+    return _.find(conf.columns, {key: input});
+}
 
 
 // listen for requests

@@ -8,6 +8,7 @@
   "dependencies": {
     "express": "^4.16.3",
     "express-sanitizer": "^1.0.3",
+    "lodash": "^4.17.5",
     "lowdb": "^1.0.0",
     "pug": "^2.0.3"
   },

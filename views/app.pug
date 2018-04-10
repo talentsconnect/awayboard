@@ -1,0 +1,39 @@
+html
+    head
+        title Awayboard app
+        meta(charset="utf-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1")
+        link(rel="manifest" href="/pwa/manifest.json")
+        link(rel="stylesheet" href="/pwa/app.css")
+    body
+
+        header
+            h1 Set your status,
+                span
+            button.js-settings ≡
+
+        main
+            each col in columns
+                button.btn--office(data-loc=col.key)= col.label
+        aside
+            div
+                h2 Settings
+                label(for="name") Name
+                input(type="text", id="name", value="", placeholder="Name must exist in Awayboard")
+
+
+        script(type="text/javascript").
+            if ('serviceWorker' in navigator) {
+                // service worker registered
+                navigator.serviceWorker.register('/service-worker.js', {scope: '/'})
+                    .then(function (registration) {
+                        console.log('service worker registered');
+                    });
+
+                // service worker ready
+                navigator.serviceWorker.ready.then(function (registration) {
+                    console.log('service worker ready');
+                });
+            }
+        script(src="/pwa/app.js", async)
