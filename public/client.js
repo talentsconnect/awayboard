@@ -44,7 +44,7 @@ $(function () {
         const rand = Math.floor(Math.random() * (1 - 99) + 99);
         let person = {};
         person.name = sanitizeString($('.js-name').val()) || rand;
-        person.image = sanitizeString($('.js-image').val()) || "https://spaceholder.cc/100x100?a=" + rand;
+        person.image = sanitizeString($('.js-image').val()) || "https://avatars.dicebear.com/v2/identicon/" + person.name + ".svg";
         person.loc = $('[data-col]').first().data('col');
 
         sendPerson(person);
