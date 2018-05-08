@@ -7,6 +7,9 @@ html
         link(rel="stylesheet" href="/style.css")
 
     body
+        .autoreload
+            label(for="Autoreload") Autoreload
+            input(type="checkbox", class="js-autoreload", id="Autoreload")
         main
             header.header
                 each col in columns

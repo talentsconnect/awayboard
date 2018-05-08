@@ -1,5 +1,32 @@
 $(function () {
 
+    const RELOAD_AFTER = 30;
+    let reloadStorage = localStorage;
+    let reloadInterval;
+
+    // auto reloading of page
+    if (reloadStorage.autoreload === "true") {
+        $('.js-autoreload').attr('checked', true);
+        reloadInterval = reloadPage();
+    }
+
+    $(document).on('click', '.js-autoreload', function () {
+        if ($(this).is(':checked')) {
+            reloadStorage.setItem('autoreload', true);
+            reloadInterval = reloadPage();
+        } else {
+            reloadStorage.setItem('autoreload', false);
+            window.clearInterval(reloadInterval);
+        }
+    });
+
+    function reloadPage() {
+        return setInterval(function () {
+            window.location.reload();
+        }, RELOAD_AFTER * 1000);
+    }
+
+
     // initial get
     $.get('/people', function (people) {
         if (people.length > 0) {
@@ -86,7 +113,6 @@ $(function () {
 
 
     // remove tile
-
     $(document).on('click', '.js-remove', function (e) {
         e.preventDefault();
         deletePerson({'name': $(this).closest('[data-tile]').data('name')});
