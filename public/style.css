@@ -159,7 +159,9 @@ form {
   flex-direction: row;
 }
 
-  input {
+  input[type="text"],
+  input[type="submit"],
+  input[type="url"] {
     all: inherit;
 
     margin: 0;
@@ -170,16 +172,24 @@ form {
     border: 1px solid var(--light);
   }
 
-  .input--name {
+  input[type="text"].input--name {
     width: 20ch;
     max-width: 33%;
   }
 
-  .input--img {
+  input[type="url"].input--img {
     width: 33vw;
   }
 
-  .btn--submit {
+  input[type="submit"].btn--submit {
     width: 20ch;
     cursor: pointer;
   }
+
+
+.autoreload {
+  right: 0;
+  bottom: 0;
+  position: fixed;
+  font-size: small;
+}

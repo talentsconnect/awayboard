@@ -35,8 +35,9 @@ Enter a name in and an image-url (has to be somewhere online) in the fields belo
 A [placeholder image](https://spaceholder.cc) will be provided if no image-url was given.
 Then drag your tile to the desired column.
 
-After that, tiles are stored permanently. Later, every person may update their working status as they wish.
+After that, tiles are stored permanently on the serverside database. Later, every person may update their working status as they wish.
 
+Click the checkbox in the right bottom of the page, to activate auto-reloading of the page every 30 second, to always show the most recent status.
 
 ## Usage via API
 An API with endpoints for reading, creating/updating and removing persons to/from the Awayboard is provided. 
@@ -198,6 +199,12 @@ Install the dependencies:
 
 ```
 $ npm install
+```
+
+### Run server
+
+```
+$ node server.js
 ```
 
 ### Tests
