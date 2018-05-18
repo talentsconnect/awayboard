@@ -9,9 +9,8 @@ for office, homeoffice and away.
 
 ![Screenshot displaying main features of the application](assets/screenshot.png)
 
-## Table of content
-<details>
-  <summary>Click to expand </summary>
+## Table of contents
+  * [Table of contents](##table-of-contents)
   * [Installation](#installation)
     * [Configuration](#configuration)
     * [Usage](#usage)
@@ -26,7 +25,6 @@ for office, homeoffice and away.
         - [Run the tests](#run-the-tests)
     * [Credits](#credits)
         - [Background images](#background-images)
-</details>
 
 
 ## Installation
