@@ -1,6 +1,6 @@
 {
   "name": "awayboard",
-  "version": "0.0.2",
+  "version": "1.0.1",
   "description": "Know where your teammates work",
   "scripts": {
     "start": "node server.js"
