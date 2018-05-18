@@ -9,6 +9,23 @@ for office, homeoffice and away.
 
 ![Screenshot displaying main features of the application](assets/screenshot.png)
 
+## Table of contents
+  * [Table of contents](##table-of-contents)
+  * [Installation](#installation)
+  * [Configuration](#configuration)
+  * [Usage](#usage)
+  * [Usage via API](#usage-via-api)
+    + [Request all people](#request-all-people)
+    + [Add new /update existing person](#add-new--update-existing-person)
+    + [Delete an existing person](#delete-an-existing-person)
+  * [Browser support](#browser-support)
+  * [Development](#development)
+    + [Installation](#installation-1)
+    + [Tests](#tests)
+      - [Run the tests](#run-the-tests)
+  * [Credits](#credits)
+      - [Background images](#background-images)
+
 
 ## Installation
 1. Build a docker image
